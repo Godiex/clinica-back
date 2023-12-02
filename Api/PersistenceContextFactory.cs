@@ -10,9 +10,9 @@ namespace Api
         {
             var Config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.Development.json")
+                .AddJsonFile("appsettings.json")
                 .Build();
-
+            
             var optionsBuilder = new DbContextOptionsBuilder<PersistenceContext>();
             optionsBuilder.UseSqlServer(Config.GetConnectionString("database"),
                 sqlopts =>

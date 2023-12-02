@@ -7,9 +7,13 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
-if (builder.Environment.IsEnvironment(ApiConstants.LocalEnviroment))
+if (builder.Environment.IsDevelopment())
 {
-    config.AddUserSecrets<Program>();
+    config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+}
+else
+{
+    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 }
 
 builder.Services.AddHealthChecks().AddSqlServer(config["ConnectionStrings:database"]);
