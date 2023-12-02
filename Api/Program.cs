@@ -42,7 +42,7 @@ app.UseInfrastructure(app.Environment);
 using var scope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope();
 var contex = scope!.ServiceProvider.GetRequiredService<PersistenceContext>();
 var start = new Start(contex);
-
+start.Inicializar();
 app.UseRouting();
 app.UseCors("CorsPolicy");
 app.UseHttpMetrics().UseEndpoints(endpoints =>
