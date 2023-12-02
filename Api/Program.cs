@@ -15,6 +15,7 @@ else
 {
     config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 }
+config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
 builder.Services.AddHealthChecks().AddSqlServer(config["ConnectionStrings:database"]);
 builder.Services.AddControllers(opts => opts.Filters.Add(typeof(AppExceptionFilterAttribute)));
@@ -41,7 +42,7 @@ app.UseInfrastructure(app.Environment);
 using var scope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope();
 var contex = scope!.ServiceProvider.GetRequiredService<PersistenceContext>();
 var start = new Start(contex);
-start.Inicializar();
+
 app.UseRouting();
 app.UseCors("CorsPolicy");
 app.UseHttpMetrics().UseEndpoints(endpoints =>
