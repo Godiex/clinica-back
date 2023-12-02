@@ -1,7 +1,7 @@
 using Domain.Services;
 using Infrastructure.Extensions.Cors;
 using Infrastructure.Extensions.Jwt;
-using Infrastructure.Extensions.Log;
+using Infrastructure.Extensions.Logs;
 using Infrastructure.Extensions.Mapper;
 using Infrastructure.Extensions.Mediator;
 using Infrastructure.Extensions.Messaging;
