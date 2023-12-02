@@ -1,0 +1,17 @@
+﻿namespace Application.UseCases.MedicalHistorys.Commands.MedicalHistoryCreate;
+
+public class MedicalHistoryCreateValidator : AbstractValidator<MedicalHistoryCreateCommand>
+{
+    public MedicalHistoryCreateValidator()
+    {
+        RuleFor(_ => _.Description).NotNull().NotEmpty().MinimumLength(1).MaximumLength(250);
+        RuleFor(_ => _.Diagnosis).NotNull().NotEmpty().MinimumLength(1).MaximumLength(250);
+        RuleFor(_ => _.Treatment).NotNull().NotEmpty().MinimumLength(1).MaximumLength(250);
+        RuleFor(_ => _.PatientId).NotNull();
+    }
+
+    private bool BeAValidDate(DateTime date)
+    {
+        return !date.Equals(default(DateTime));
+    }
+}
