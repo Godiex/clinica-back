@@ -15,6 +15,29 @@ namespace Infrastructure.Inicialize
 
         public void Inicializar()
         {
+            if (!_context.Eps.Any(u => u.State == EpsState.Active))
+            {
+                Eps[] defaultEpsArray = new Eps[]
+                {
+                    new Eps("Salud Total"),
+                    new Eps("Nueva EPS"),
+                    new Eps("EPS Sura"),
+                    new Eps("Sanitas EPS"),
+                    new Eps("Coomeva EPS"),
+                    new Eps("Aliansalud EPS"),
+                    new Eps("Cajacopi EPS"),
+                    new Eps("Compensar EPS"),
+                    new Eps("SOS EPS"),
+                    new Eps("Cruz Blanca EPS")
+                };
+
+                foreach (var eps in defaultEpsArray)
+                {
+                    _context.Eps.Add(eps);
+                }
+                _context.SaveChanges();
+            }
+            
             if (!_context.Users.Any(u => u.Role == Role.Admin))
             {
                 var defaultAdmin = new Admin
@@ -38,6 +61,7 @@ namespace Infrastructure.Inicialize
                     defaultAdmin
                 );
                 _context.Users.Add(defaultUser);
+                _context.SaveChanges();
             }
 
             if (!_context.Users.Any(u => u.Role == Role.Doctor))
@@ -65,10 +89,12 @@ namespace Infrastructure.Inicialize
                 );
 
                 _context.Users.Add(defaultUser);
+                _context.SaveChanges();
             }
 
             if (!_context.Users.Any(u => u.Role == Role.Patient))
             {
+                var eps = _context.Eps.FirstOrDefault();
                 var defaultPatient = new Patient
                 (
                     "Carlos",
@@ -81,7 +107,7 @@ namespace Infrastructure.Inicialize
                     "555-123-456",
                     "Avenida Principal, Ciudad",
                     new DateTime(1992, 10, 8),
-                    Guid.Parse("08eefb10-7759-4896-86cd-08dbf27f60b6")
+                    eps.Id
                 );
 
                 var defaultUser = new User
@@ -92,33 +118,8 @@ namespace Infrastructure.Inicialize
                 );
 
                 _context.Users.Add(defaultUser);
+                _context.SaveChanges();
             }
-
-
-            if (!_context.Eps.Any(u => u.State == EpsState.Active))
-            {
-                Eps[] defaultEpsArray = new Eps[]
-                {
-                    new Eps("Salud Total"),
-                    new Eps("Nueva EPS"),
-                    new Eps("EPS Sura"),
-                    new Eps("Sanitas EPS"),
-                    new Eps("Coomeva EPS"),
-                    new Eps("Aliansalud EPS"),
-                    new Eps("Cajacopi EPS"),
-                    new Eps("Compensar EPS"),
-                    new Eps("SOS EPS"),
-                    new Eps("Cruz Blanca EPS")
-                };
-
-                foreach (var eps in defaultEpsArray)
-                {
-                    _context.Eps.Add(eps);
-                }
-            }
-
-
-            _context.SaveChanges();
         }
     }
 }
