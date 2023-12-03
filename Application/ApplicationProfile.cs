@@ -3,6 +3,7 @@ using Application.UseCases.Appointments.Queries.GetAppointments;
 using Application.UseCases.Epses.Queries.GetEps;
 using Application.UseCases.Epses.Queries.GetEpsNormal;
 using Application.UseCases.MedicalHistorys.Queries.GetMedicalHistory;
+using Application.UseCases.MedicalHistorys.Queries.GetMedicalHistoryByDocumentNumber;
 using Application.UseCases.Medics.Queries.GetDoctor;
 using Application.UseCases.Medics.Queries.GetEpsNormal;
 using Application.UseCases.Patients.Queries.GetPatient;
@@ -23,6 +24,10 @@ public class ApplicationProfile : Profile
         CreateMap<Patient, PatientDto>().ReverseMap();
         CreateMap<User, UserDto>().ReverseMap();
         CreateMap<Eps, EpsNormalDto>().ReverseMap();
+        CreateMap<MedicalHistory, MedicalHistoryByDocumentNumberDto>()
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src =>
+                $"{src.Patient.FirstName} {src.Patient.SecondName} {src.Patient.LastName} {src.Patient.SecondLastName}"
+            )).ReverseMap();
         CreateMap<Appointment, AppointmentNamesDto>()
             .ForMember(dest => dest.PatientFullName,
                 opt => opt.MapFrom(src => $"{src.Patient.FirstName} {src.Patient.LastName}"))

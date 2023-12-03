@@ -5,6 +5,7 @@ using Application.UseCases.Appointments.Queries.GetAppointmentByPatientId;
 using Application.UseCases.Appointments.Queries.GetAppointments;
 using Application.UseCases.MedicalHistorys.Commands.MedicalHistoryCreate;
 using Application.UseCases.MedicalHistorys.Queries.GetMedicalHistory;
+using Application.UseCases.MedicalHistorys.Queries.GetMedicalHistoryByDocumentNumber;
 using Application.UseCases.MedicalHistorys.Queries.GetMedicalHistoryByID;
 using Application.UseCases.MedicalHistorys.Queries.GetMedicalHistoryByPatientId;
 
@@ -56,6 +57,19 @@ public class MedicalHistory
         int recordsPerPage = 20)
     {
         return await _mediator.Send(new MedicalHistoryByPatientIdQuery(id)
+        {
+            Page = page,
+            RecordsPerPage = recordsPerPage
+        });
+    }
+    [HttpGet("user/documentnumber/{documentNumber}")]
+    [SwaggerResponseExample(400, typeof(ErrorResponse))]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(MedicalHistoryByDocumentNumberDto), StatusCodes.Status200OK)]
+    public async Task<ResponsePagination<MedicalHistoryByDocumentNumberDto>> GetMedicalHistoryByDocumentNumber(string documentNumber, int page = 1,
+        int recordsPerPage = 20)
+    {
+        return await _mediator.Send(new MedicalHistoryByDocumentNumberQuery(documentNumber)
         {
             Page = page,
             RecordsPerPage = recordsPerPage

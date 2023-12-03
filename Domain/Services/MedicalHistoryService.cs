@@ -42,7 +42,19 @@ public class MedicalHistoryService
             pageSize: pageSize,
             filter: e => e.PatientId == patientId,
             orderBy: query => query.OrderByDescending(e => e.Date),
-            includeStringProperties: "",
+            includeStringProperties: "Patient",
+            isTracking: false);
+
+        return result;
+    }
+    public async Task<PagedResult<MedicalHistory>> GetByPatientDocumentNumber(string documentNumber, int page, int pageSize)
+    {
+        var result = await _medicalHistoryRepository.GetPagedFilterAsync(
+            page: page,
+            pageSize: pageSize,
+            filter: e => e.Patient.DocumentNumber == documentNumber,
+            orderBy: query => query.OrderByDescending(e => e.Date),
+            includeStringProperties: "Patient",
             isTracking: false);
 
         return result;
