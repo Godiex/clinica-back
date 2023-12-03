@@ -7,5 +7,5 @@ public record MedicalHistoryCreateCommand(
     string Description,
     string Diagnosis,
     string Treatment,
-    Guid PatientId
+    string DocumentNumber
 ) : IRequest;

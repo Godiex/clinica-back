@@ -20,7 +20,7 @@ public class MedicalHistoryCreateCommandHandler : IRequestHandler<MedicalHistory
 
     public async Task<Unit> Handle(MedicalHistoryCreateCommand request, CancellationToken cancellationToken)
     {
-        var patient = await _patientRepository.GetByIdAsync(request.PatientId);
+        var patient = await _patientRepository.GetAsync(filter: e => e.DocumentNumber == request.DocumentNumber);
 
         if (patient == null)
         {
@@ -33,7 +33,7 @@ public class MedicalHistoryCreateCommandHandler : IRequestHandler<MedicalHistory
             request.Description,
             request.Diagnosis,
             request.Treatment,
-            request.PatientId
+            patient.FirstOrDefault().Id
         );
 
         await _medicalHistoryServices.Create(medicalHistory);

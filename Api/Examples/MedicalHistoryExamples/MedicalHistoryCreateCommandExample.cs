@@ -11,7 +11,7 @@ namespace Api.Examples.MedicalHistoryExamples
                 "Dolor de muelas",
                 "Caries",
                 "limpieza",
-                new Guid()
+                "1007824011"
             );
             yield return SwaggerExample.Create("medicalHistoryCreateCommand", medicalHistoryCommand);
         }
